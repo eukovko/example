@@ -1,7 +1,4 @@
-package com.kovko.string;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package com.kovko.string.address;
 
 public class Address {
 
@@ -19,12 +16,10 @@ public class Address {
         this.zip = zip;
     }
 
-    private Address(String address) {
-
+    public Address(String string) {
+        AddressParser.parseAddress(string, this);
     }
 
-    public Address() {
-    }
 
     public String getCountry() {
         return country;
@@ -72,28 +67,6 @@ public class Address {
     @Override
     public String toString() {
         return String.format("%s,%s:%s-%s,%s", country, city, street, apartment, zip);
-    }
-
-    public static Address parseAddress(String address){
-        Address result = new Address();
-
-        Pattern pattern = Pattern.compile("(\\w+),(\\w+):(\\w+)-(\\w+),(\\w+)");
-        Matcher matcher = pattern.matcher(address);
-        boolean matches = matcher.matches();
-        assert matches;
-        String country = matcher.group(1);
-        String city = matcher.group(2);
-        String street = matcher.group(3);
-        String apartment = matcher.group(4);
-        String zip = matcher.group(5);
-
-        result.setCountry(country);
-        result.setCity(city);
-        result.setStreet(street);
-        result.setApartment(apartment);
-        result.setZip(zip);
-
-        return result;
     }
 
     @Override
